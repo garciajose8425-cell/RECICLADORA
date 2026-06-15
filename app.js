@@ -116,17 +116,26 @@ function render() {
 
     let total = 0;
 
-    compraActual.forEach(x => {
+    compraActual.forEach((x, index) => {
 
         total += x.subtotal;
 
         html += `
         <div class="item">
+
             <b>${x.material}</b>
             |
             ${x.libras} lb
             |
             C$${x.subtotal.toFixed(2)}
+
+            <button
+                onclick="eliminarCompra(${index})"
+                style="width:auto;margin-left:10px;"
+            >
+                ❌
+            </button>
+
         </div>
         `;
 
@@ -136,6 +145,13 @@ function render() {
 
     document.getElementById("totalGeneral").innerHTML =
         "C$" + total.toFixed(2);
+
+}
+function eliminarCompra(index){
+
+    compraActual.splice(index, 1);
+
+    render();
 
 }
 
@@ -479,17 +495,26 @@ function renderVenta(){
 
     let total = 0;
 
-    ventaActual.forEach(x=>{
+    ventaActual.forEach((x,index)=>{
 
         total += x.subtotal;
 
         html += `
             <div class="item">
+
                 <b>${x.material}</b>
                 |
                 ${x.libras} lb
                 |
                 C$${x.subtotal.toFixed(2)}
+
+                <button
+                    onclick="eliminarVenta(${index})"
+                    style="width:auto;margin-left:10px;"
+                >
+                    ❌
+                </button>
+
             </div>
         `;
 
@@ -505,127 +530,11 @@ function renderVenta(){
         "C$" + total.toFixed(2);
 
 }
-async function guardarVenta(){
+function eliminarVenta(index){
 
-    if(ventaActual.length === 0){
+    ventaActual.splice(index, 1);
 
-        alert(
-            "No hay materiales agregados."
-        );
-
-        return;
-
-    }
-
-    try{
-
-        let total =
-            ventaActual.reduce(
-                (s,x)=>s+x.subtotal,
-                0
-            );
-
-        const {
-            data: ventaData,
-            error: ventaError
-        } =
-        await supabaseClient
-            .from("ventas")
-            .insert([
-                {
-                    total
-                }
-            ])
-            .select()
-            .single();
-
-        if(ventaError)
-            throw ventaError;
-
-        const ventaId =
-            ventaData.id;
-
-        const detalles =
-            ventaActual.map(x => ({
-
-                venta_id: ventaId,
-                material_id: x.material_id,
-                libras: x.libras,
-                precio_lb: x.precio,
-                subtotal: x.subtotal
-
-            }));
-
-        const {
-            error: detalleError
-        } =
-        await supabaseClient
-            .from("detalle_venta")
-            .insert(detalles);
-
-        if(detalleError)
-            throw detalleError;
-
-        for(const item of ventaActual){
-
-            const {
-                data: invData
-            } =
-            await supabaseClient
-                .from("inventario")
-                .select("libras")
-                .eq(
-                    "material_id",
-                    item.material_id
-                )
-                .single();
-
-            const nuevasLibras =
-                Number(invData.libras)
-                -
-                Number(item.libras);
-
-            await supabaseClient
-                .from("inventario")
-                .update({
-                    libras:
-                        nuevasLibras
-                })
-                .eq(
-                    "material_id",
-                    item.material_id
-                );
-
-        }
-
-        alert(
-            "Venta guardada correctamente."
-        );
-
-        ventaActual = [];
-
-        document.getElementById(
-            "detalleVenta"
-        ).innerHTML = "";
-
-        document.getElementById(
-            "totalVenta"
-        ).innerHTML =
-            "C$0.00";
-
-        actualizarVenta();
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        alert(
-            "Error: " +
-            error.message
-        );
-
-    }
+    renderVenta();
 
 }
 async function cargarDashboard(){
