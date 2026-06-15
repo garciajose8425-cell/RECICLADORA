@@ -1,0 +1,76 @@
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:15px;
+}
+
+.contenedor{
+    max-width:700px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+}
+
+.menu{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.menu button{
+    flex:1;
+}
+
+.total-box{
+    background:#0a7f3f;
+    color:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+    font-size:24px;
+    margin-bottom:20px;
+}
+
+#totalGeneral{
+    font-size:38px;
+    font-weight:bold;
+}
+
+select,
+input,
+button{
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    font-size:18px;
+    box-sizing:border-box;
+}
+
+button{
+    cursor:pointer;
+}
+
+.guardar{
+    background:#0a7f3f;
+    color:white;
+    border:none;
+    font-weight:bold;
+}
+
+.item{
+    background:white;
+    padding:10px;
+    margin-top:8px;
+    border-radius:8px;
+}
+
+.oculto{
+    display:none;
+}
+
+.seccion{
+    margin-top:15px;
+}

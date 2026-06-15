@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recicladora</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+</head>
+<body>
+
+<div class="contenedor">
+
+    <h1>♻️ Recicladora "DEPOSITO VERDE"</h1>
+
+    <div class="menu">
+
+        <button onclick="mostrarSeccion('compras')">
+            Compras
+        </button>
+
+        <button onclick="mostrarSeccion('inventario')">
+            Inventario
+        </button>
+
+        <button onclick="mostrarSeccion('historial')">
+            Historial
+        </button>
+<button onclick="mostrarSeccion('ventas')">
+    Ventas
+</button>
+<button onclick="mostrarSeccion('dashboard')">
+    Dashboard
+</button>
+    </div>
+
+    <div id="compras" class="seccion">
+
+        <div class="total-box">
+            TOTAL A PAGAR
+            <div id="totalGeneral">C$0.00</div>
+        </div>
+
+        <select id="material"></select>
+
+        <input
+            type="number"
+            id="libras"
+            placeholder="Libras"
+            step="0.01"
+        >
+
+        <input
+            type="number"
+            id="precio"
+            placeholder="Precio"
+            step="0.01"
+        >
+
+        <div id="subtotal">
+            Subtotal: C$0.00
+        </div>
+
+        <button onclick="agregarItem()">
+            Agregar
+        </button>
+
+        <hr>
+
+        <div id="detalleCompra"></div>
+
+        <button class="guardar" onclick="guardarCompra()">
+            Guardar Compra
+        </button>
+
+    </div>
+
+    <div id="inventario" class="seccion oculto">
+
+        <h2>Inventario</h2>
+
+        <button onclick="verInventario()">
+            Actualizar Inventario
+        </button>
+
+        <div id="inventarioLista"></div>
+
+    </div>
+<div id="ventas" class="seccion oculto">
+
+    <h2>Ventas</h2>
+
+    <div class="total-box">
+        TOTAL VENTA
+        <div id="totalVenta">C$0.00</div>
+    </div>
+
+    <select id="materialVenta"></select>
+
+    <input
+        type="number"
+        id="inventarioDisponible"
+        placeholder="Inventario"
+        readonly
+    >
+
+    <input
+        type="number"
+        id="librasVenta"
+        placeholder="Libras a vender"
+        step="0.01"
+    >
+
+    <input
+        type="number"
+        id="precioVenta"
+        placeholder="Precio venta"
+        step="0.01"
+        readonly
+    >
+
+    <div id="subtotalVenta">
+        Subtotal: C$0.00
+    </div>
+
+    <button onclick="agregarVenta()">
+        Agregar Venta
+    </button>
+
+    <hr>
+
+    <div id="detalleVenta"></div>
+
+    <button class="guardar" onclick="guardarVenta()">
+        Guardar Venta
+    </button>
+
+</div>
+    <div id="historial" class="seccion oculto">
+
+        <h2>Historial Compras</h2>
+
+        <button onclick="verCompras()">
+            Cargar Historial
+        </button>
+
+        <div id="historialCompras"></div>
+
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+<div id="dashboard" class="seccion oculto">
+
+    <h2>Dashboard</h2>
+
+    <button onclick="cargarDashboard()">
+        Actualizar Dashboard
+    </button>
+
+    <div id="dashboardInfo"></div>
+
+</div>
+</body>
+</html>
